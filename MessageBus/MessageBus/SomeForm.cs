@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows.Forms
+//using System.Windows.Forms
 
 namespace MessageBus
 {
-    class SomeForm : Form
+    class SomeForm //: Form
     {
-        protected override void OnLoad(EventArgs e)
+        public void OnLoad(EventArgs e) // protected override
         {
-            base.OnLoad(e);
-            MessageBus messageBus = new MessageBus();
-            messageBus.Subscribe(this);
+            //base.OnLoad(e);
+            MessageBus.Instance.Subscribe(this);
+            //MessageBus messageBus = new MessageBus();
+            //messageBus.Subscribe(this);
         }
 
         public void OnEvent(OnProgressChangedEvent e)
         {
-            progressBar.Value = e.Progress;
+            //progressBar.Value = e.Progress;
         }
 
-        protected override void OnClosed(EventArgs e)
+        public void OnClosed(EventArgs e) //protected override 
         {
-            base.OnClosed(e);
-            EventBus.Instance.Unregister(this);
+            //base.OnClosed(e);
+            MessageBus.Instance.Unregister(this);
         }
     }
 }

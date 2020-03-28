@@ -49,12 +49,8 @@ namespace MessageBus
                 Type type = subscriber.GetType(); //What dis? - !!!Muligt svar: Det må være typen af klasse altså f.eks. 
 
                 method = type.GetMethod("OnEvent"); //What dis? -> Det her er sikkert vigtigt (Tror det har noget at gøre med med en metode hos subscribers  )
-                if (method == null) //Vi behøver ikke at bruge exceptions
-                    throw new ArgumentException("Class " + type.Name + " does not containt method OnEvent");
 
                 ParameterInfo[] parameters = method.GetParameters(); //What dis? 
-                if (parameters.Length != 1)
-                    throw new ArgumentException("Method OnEvent of class " + type.Name + " have invalid number of parameters (should be one)");
 
                 EventType = parameters[0].ParameterType; 
 

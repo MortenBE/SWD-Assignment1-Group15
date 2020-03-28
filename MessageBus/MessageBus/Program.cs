@@ -6,17 +6,36 @@ namespace MessageBus
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Test!");
+            Owner Tobi = new Owner(82, 10000);
+            Worker John = new Worker(30, 5);
+            Worker Tim = new Worker(18, 1);
+            MessageBus.Instance.Subscribe(John);
+            MessageBus.Instance.Subscribe(Tobi);
 
-            OnProgressChangedEvent myEvent = new OnProgressChangedEvent(5);
+            Console.WriteLine("Tobi - Moeny: " + Tobi.Money + " Age: " + Tobi.Age);
+            Console.WriteLine("John - Rank: " + John.Rank + " Age: " + John.Age);
+            Console.WriteLine("Tim  - Rank: " + Tim.Rank + " Age: " + Tim.Age);
 
-            Console.WriteLine(myEvent.Progress);
+            Console.WriteLine("");
+            Console.WriteLine("");
 
-            Player myPlayer = new Player();
+            MessageBus.Instance.PostEvent(new OnProgressChangedEvent(10));
+            MessageBus.Instance.PostEvent(new OnAgeChangedEvent(10));
+            Console.WriteLine("Tobi - Moeny: " + Tobi.Money + " Age: " + Tobi.Age);
+            Console.WriteLine("John - Rank: " + John.Rank + " Age: " + John.Age);
+            Console.WriteLine("Tim  - Rank: " + Tim.Rank + " Age: " + Tim.Age);
 
-            //myPlayer.OnDoWork();
 
-            Console.WriteLine(myEvent.Progress);
+
+            //OnProgressChangedEvent myEvent = new OnProgressChangedEvent(5);
+
+            //Console.WriteLine(myEvent.Progress);
+
+            //Player myPlayer = new Player();
+
+            ////myPlayer.OnDoWork();
+
+            //Console.WriteLine(myEvent.Progress);
 
 
 
