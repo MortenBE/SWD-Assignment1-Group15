@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MessageBus
 {
-    class Worker
+    public class Worker
     {
         public int Age;
         public int Rank;

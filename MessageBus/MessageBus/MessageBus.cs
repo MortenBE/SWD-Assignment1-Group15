@@ -15,16 +15,15 @@ namespace MessageBus
         public static MessageBus Instance { get { return instance ?? (instance = new MessageBus()); } }
         public void Subscribe(object subscriber)
         {
-            //Jeg udelader at tjekke om subscriber allerede er subscribet. Dette burde være ok i vores eksempel. 
             subscribers.Add(new EventSubscriberWrapper(subscriber));
         }
 
-        public void Unregister(object subscriber)
+        public void Unsubscribe(object subscriber)
         {
             subscribers.RemoveAll(l => l.Subscriber == subscriber); //Subscriber er fra EventSubscriberWrapper, Altså objektet
         }
 
-        public void PostEvent(object e)
+        public void Broadcast(object e)
         {
             subscribers.Where(l => l.EventType == e.GetType()).ToList().ForEach(l => l.PostEvent(e));
         }

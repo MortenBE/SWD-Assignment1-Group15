@@ -23,7 +23,7 @@ namespace MessageBus
         public void OnClosed(EventArgs e) //protected override 
         {
             //base.OnClosed(e);
-            MessageBus.Instance.Unregister(this);
+            MessageBus.Instance.Unsubscribe(this);
         }
     }
 }

@@ -20,6 +20,20 @@ namespace MessageBus
             Age += e.Age;
         }
 
+        public void PromoteRanks(int ranks)
+        {
+            MessageBus.Instance.Broadcast(new OnProgressChangedEvent(ranks));
+        }
+
+        public void DismissWorker(Worker w)
+        {
+            MessageBus.Instance.Unsubscribe(w);
+        }
+        public void HireWorker(Worker w)
+        {
+            MessageBus.Instance.Subscribe(w);
+        }
+
 
     }
 }
