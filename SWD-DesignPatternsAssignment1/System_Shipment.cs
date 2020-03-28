@@ -6,5 +6,6 @@ namespace SWD_DesignPatternsAssignment1
 {
     class System_Shipment
     {
+
     }
 }

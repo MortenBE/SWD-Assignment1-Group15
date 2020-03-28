@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SWD_DesignPatternsAssignment1
 {
-    public class MessageBus <T> : Ibus<T>
+    public sealed class MessageBus <T> : Ibus<T>
     {
         private class _Subscribers
         {
