@@ -6,12 +6,13 @@ namespace SWD_DesignPatternsAssignment1
 {
     class System_Order
     {
-        private string _order { get; set; }
+        List<Order> _Orders;
+        
 
         System_Order() { }
-        System_Order(string myOrder)
+        System_Order(List<Order>orders)
         {
-            _order = myOrder;
+            _Orders = orders;            
         }
 
     }
