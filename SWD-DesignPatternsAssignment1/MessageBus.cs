@@ -1,69 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
-namespace SWD_DesignPatternsAssignment1
+public class EventBus
 {
-    public interface IPresentationEventArgs { }
+    public static EventBus Instance { get { return instance ?? (instance = new EventBus()); } }
 
-    public abstract class PresentationEvent<TPresentationEventArgs> where TPresentationEventArgs : IPresentationEventArgs
+    public void Register(object listener)
     {
-        private readonly List<Action<TPresentationEventArgs>> _subscribers = new List<Action<TPresentationEventArgs>>();
-
-        public void Subscribe(Action<TPresentationEventArgs> action)
-        {
-            _subscribers.Add(action);
-        }
-
-        public void Publish(TPresentationEventArgs message)
-        {
-            foreach (var sub in _subscribers)
-            {
-                sub.Invoke(message);
-            }
-        }
+        if (!listeners.Any(l => l.Listener == listener))
+            listeners.Add(new EventListenerWrapper(listener));
     }
 
-    public class MessageChangedEventArgs : IPresentationEventArgs 
+    public void Unregister(object listener)
     {
-        public string Message { get; set; }
+        listeners.RemoveAll(l => l.Listener == listener);
     }
 
-    public class MessageChangedEvent : PresentationEvent<MessageChangedEventArgs>
+    public void PostEvent(object e)
     {
-
+        listeners.Where(l => l.EventType == e.GetType()).ToList().ForEach(l => l.PostEvent(e));
     }
 
-    public static class MessageBus
+    private static EventBus instance;
+
+    private EventBus() { }
+
+    private List<EventListenerWrapper> listeners = new List<EventListenerWrapper>();
+
+    private class EventListenerWrapper
     {
-        private static readonly Dictionary<Type, Func<Object>> _mapping = new Dictionary<Type, Func<Object>>();
+        public object Listener { get; private set; }
+        public Type EventType { get; private set; }
 
-        private static T GetPresentationEvent<T, TArgs>()
-            where T : PresentationEvent<TArgs>, new()
-            where TArgs : IPresentationEventArgs
+        private MethodBase method;
+
+        public EventListenerWrapper(object listener)
         {
-            if (_mapping.ContainsKey(typeof(T)))
-            {
-                return _mapping[typeof(T)]() as T;
-            }
+            Listener = listener;
 
-            var presEvent = new T();
-            _mapping.Add(typeof(T), () => presEvent);
+            Type type = listener.GetType();
 
-            return presEvent;
+            method = type.GetMethod("OnEvent");
+            if (method == null)
+                throw new ArgumentException("Class " + type.Name + " does not containt method OnEvent");
+
+            ParameterInfo[] parameters = method.GetParameters();
+            if (parameters.Length != 1)
+                throw new ArgumentException("Method OnEvent of class " + type.Name + " have invalid number of parameters (should be one)");
+
+            EventType = parameters[0].ParameterType;
         }
 
-        public static void Subscribe<T, TArgs>(Action<TArgs> action) where T : PresentationEvent<TArgs>, new()
-            where TArgs : IPresentationEventArgs
+        public void PostEvent(object e)
         {
-            var presEvent = GetPresentationEvent<T, TArgs>();
-            presEvent.Subscribe(action);
+            method.Invoke(Listener, new[] { e });
         }
-
-        public static void Publish<T, TArgs>(TArgs args) where T : PresentationEvent<TArgs>, new()
-            where TArgs : IPresentationEventArgs
-        {
-            var presEvent = GetPresentationEvent<T, TArgs>();
-            presEvent.Publish(args);
-        }
-    }
+    }      
 }
