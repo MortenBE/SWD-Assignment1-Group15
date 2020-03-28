@@ -4,37 +4,39 @@ using System.Text;
 
 namespace SWD_DesignPatternsAssignment1
 {
-    public class MessageBus<T>
+    public class MessageBus <T> : Ibus<T>
     {
-        private static MessageBus<T> _instance = null;
-        private static readonly object _lock = new object();
-
-        protected MessageBus() {}
-
-        public static MessageBus<T> Instance
+        private class _Subscribers
         {
-            get
-            {
-                lock (_lock)
+           
+            // Måske implementere subscribers som en klasse istedet...
+        }
+            public void Subscribe(Action handler)
+        {
+            if (_Subscribers.ContainsKey(typeof(TMessage)))
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new MessageBus<T>();
-                    }
-                    return _instance;
+                    var handlers = _Subscribers[typeof(TMessage)];
+                    handlers.Add(handler);
                 }
-            }
+                else
+                {
+                    var handlers = new List(); handlers.Add(handler); _Subscribers[typeof(TMessage)] = handlers;
+                }
         }
 
-        public event EventHandler<MessageBusEventArgs<T>> MessageRecieved;
-
-        public void SendMessage(object sender, T Message)
+        public void Unsubscribe(Action handler)
         {
-            if (MessageRecieved != null)
-            {
-                MessageRecieved(sender, new MessageBusEventArgs<T>(Message));
-            }
+            throw new NotImplementedException();
+        }
+
+        public void Publish(object message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Publish(TMessage<T> message)
+        {
+            throw new NotImplementedException();
         }
     }
-
 }
