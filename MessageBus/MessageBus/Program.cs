@@ -13,7 +13,7 @@ namespace MessageBus
             MessageBus.Instance.Subscribe(John);
             MessageBus.Instance.Subscribe(Tobi);
 
-            Console.WriteLine("Tobi - Moeny: " + Tobi.Money + " Age: " + Tobi.Age);
+            Console.WriteLine("Tobi - Money: " + Tobi.Money + " Age: " + Tobi.Age);
             Console.WriteLine("John - Rank: " + John.Rank + " Age: " + John.Age);
             Console.WriteLine("Tim  - Rank: " + Tim.Rank + " Age: " + Tim.Age);
 
@@ -23,7 +23,7 @@ namespace MessageBus
             MessageBus.Instance.Broadcast(new OnProgressChangedEvent(10));
             MessageBus.Instance.Broadcast(new OnAgeChangedEvent(10));
 
-            Console.WriteLine("Tobi - Moeny: " + Tobi.Money + " Age: " + Tobi.Age);
+            Console.WriteLine("Tobi - Money: " + Tobi.Money + " Age: " + Tobi.Age);
             Console.WriteLine("John - Rank: " + John.Rank + " Age: " + John.Age);
             Console.WriteLine("Tim  - Rank: " + Tim.Rank + " Age: " + Tim.Age);
 
@@ -32,7 +32,7 @@ namespace MessageBus
 
             Tobi.PromoteRanks(10);
 
-            Console.WriteLine("Tobi - Moeny: " + Tobi.Money + " Age: " + Tobi.Age);
+            Console.WriteLine("Tobi - Money: " + Tobi.Money + " Age: " + Tobi.Age);
             Console.WriteLine("John - Rank: " + John.Rank + " Age: " + John.Age);
             Console.WriteLine("Tim  - Rank: " + Tim.Rank + " Age: " + Tim.Age);
 
@@ -44,27 +44,9 @@ namespace MessageBus
             Console.WriteLine("");
             Console.WriteLine("");
 
-            Console.WriteLine("Tobi - Moeny: " + Tobi.Money + " Age: " + Tobi.Age);
+            Console.WriteLine("Tobi - Money: " + Tobi.Money + " Age: " + Tobi.Age);
             Console.WriteLine("John - Rank: " + John.Rank + " Age: " + John.Age);
             Console.WriteLine("Tim  - Rank: " + Tim.Rank + " Age: " + Tim.Age);
-
-
-
-
-
-            //OnProgressChangedEvent myEvent = new OnProgressChangedEvent(5);
-
-            //Console.WriteLine(myEvent.Progress);
-
-            //Player myPlayer = new Player();
-
-            ////myPlayer.OnDoWork();
-
-            //Console.WriteLine(myEvent.Progress);
-
-
-
-
         }
     }
 }

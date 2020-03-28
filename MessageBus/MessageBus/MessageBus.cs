@@ -17,46 +17,36 @@ namespace MessageBus
         {
             subscribers.Add(new EventSubscriberWrapper(subscriber));
         }
-
         public void Unsubscribe(object subscriber)
         {
-            subscribers.RemoveAll(l => l.Subscriber == subscriber); //Subscriber er fra EventSubscriberWrapper, Altså objektet
+            subscribers.RemoveAll(l => l.Subscriber == subscriber);
         }
-
         public void Broadcast(object e)
         {
             subscribers.Where(l => l.EventType == e.GetType()).ToList().ForEach(l => l.PostEvent(e));
         }
-
         //For at gøre det til en singleton: 
         private static MessageBus instance;
-        private MessageBus() { } //Ved ikke om dette er nødvendigt.
+        private MessageBus() { } //Ved ikke om dette er nødvendigt.        
         
-        
-        private List<EventSubscriberWrapper> subscribers = new List<EventSubscriberWrapper>(); //Liste med Event-Subscriber Wrappers.
+        private List<EventSubscriberWrapper> subscribers = new List<EventSubscriberWrapper>(); 
 
-        private class EventSubscriberWrapper //Evt blot en subscriber. Denne wrapper indeholder subscriberen med mere
+        private class EventSubscriberWrapper 
         {
             public object Subscriber { get; private set; }
-            public Type EventType { get; private set; } //Kig på at fjern
-            private MethodBase method; //Kig på at fjern sammen med: using System.Reflection; 
+            public Type EventType { get; private set; } 
+            private MethodBase method; 
 
             public EventSubscriberWrapper(object subscriber)
             {
-                Subscriber = subscriber;
-                
-                Type type = subscriber.GetType(); //What dis? - !!!Muligt svar: Det må være typen af klasse altså f.eks. 
-
-                method = type.GetMethod("OnEvent"); //What dis? -> Det her er sikkert vigtigt (Tror det har noget at gøre med med en metode hos subscribers  )
-
-                ParameterInfo[] parameters = method.GetParameters(); //What dis? 
-
-                EventType = parameters[0].ParameterType; 
-
-                //Okay det ser at vi lige skal kigge det her igennem inden at vi sletter hele what dis koden. 
+                Subscriber = subscriber;                
+                Type type = subscriber.GetType(); 
+                method = type.GetMethod("OnEvent"); 
+                ParameterInfo[] parameters = method.GetParameters();
+                EventType = parameters[0].ParameterType;               
             }
 
-            public void PostEvent(object e) // What dis?
+            public void PostEvent(object e) 
             {
                 method.Invoke(Subscriber, new[] { e });
             }
