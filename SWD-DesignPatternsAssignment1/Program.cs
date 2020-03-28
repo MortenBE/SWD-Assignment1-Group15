@@ -61,10 +61,9 @@ namespace SWD_DesignPatternsAssignment1
 
 
 
-
-            //Console.WriteLine(myOrder1.ToString());
-            //Console.WriteLine(myOrder2.ToString());
-            //Console.WriteLine(myOrder3.ToString());
+            Console.WriteLine("Hello World!");
+            IMessageBus<int> bus = new MessageBus<int>();
+            bus.Subscribe();
         }
     }
 }
