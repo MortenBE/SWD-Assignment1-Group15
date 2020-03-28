@@ -1,53 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace SWD_DesignPatternsAssignment1
 {
     class Program
     {
+        static void OnMessageChanged(MessageChangedEventArgs args)
+        {
+            Console.WriteLine(args.Message);
+        }
+        static void test(MessageChangedEventArgs args)
+        {
+            Console.WriteLine(args.Message);
+        }
+        static void test2(MessageChangedEventArgs args)
+        {
+            Console.WriteLine("Gider ikke have besked");
+        }
+
         static void Main(string[] args)
         {
-            //List<Order> Orders;
-            //Orders = new List<Order>();
-
-            //int myIndex = 0;
-
-
-            //Console.WriteLine("Ordrer: ");
-            //Order Ost = new Order("Ost", 24.25, "Det lugter");
-            //Order Banan = new Order("Banan", 2.00, "Øko");
-
-            //Console.WriteLine(Ost.ToString());
-            //Console.WriteLine(Banan.ToString());
-
-            //Orders.Add(Ost);
-            //Orders.Add(Banan);
-
-            //Console.WriteLine("");
-            //Console.WriteLine("");
-
-            //Console.WriteLine("Liste: ");
-
-            //foreach (var Order in Orders)
-            //{
-            //    Console.WriteLine(Order.ToString());
-            //}
-
-            //Console.WriteLine("");
-            //Console.WriteLine("");
-
-            //Orders.Add(new Order("Tandpasta", 22.50, "Skummet"));
-
-            //Console.WriteLine("Liste (added): ");
-
-            //foreach (var Order in Orders)
-            //{
-            //    Console.WriteLine(Order.ToString());
-            //}
-
-            Console.WriteLine("Hello World!");
-            IBus<int> bus = new MessageBus<int>();
-            bus.Subscribe();
+            MessageBus.Subscribe<MessageChangedEvent, MessageChangedEventArgs>(OnMessageChanged);
+            MessageBus.Subscribe<MessageChangedEvent, MessageChangedEventArgs>(test);
+            MessageBus.Subscribe<MessageChangedEvent, MessageChangedEventArgs>(test2);
+            MessageBus.Publish<MessageChangedEvent, MessageChangedEventArgs>(new MessageChangedEventArgs{ Message = "Hello world."});
         }
     }
 }
