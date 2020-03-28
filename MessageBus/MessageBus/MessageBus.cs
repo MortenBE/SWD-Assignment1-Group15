@@ -32,6 +32,8 @@ namespace MessageBus
         //For at gøre det til en singleton: 
         private static MessageBus instance;
         private MessageBus() { } //Ved ikke om dette er nødvendigt.
+        
+        
         private List<EventSubscriberWrapper> subscribers = new List<EventSubscriberWrapper>(); //Liste med Event-Subscriber Wrappers.
 
         private class EventSubscriberWrapper //Evt blot en subscriber. Denne wrapper indeholder subscriberen med mere

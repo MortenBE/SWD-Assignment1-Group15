@@ -6,7 +6,21 @@ namespace MessageBus
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Test!");
+
+            OnProgressChangedEvent myEvent = new OnProgressChangedEvent(5);
+
+            Console.WriteLine(myEvent.Progress);
+
+            Player myPlayer = new Player();
+
+            //myPlayer.OnDoWork();
+
+            Console.WriteLine(myEvent.Progress);
+
+
+
+
         }
     }
 }

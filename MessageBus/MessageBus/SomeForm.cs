@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms
 
 namespace MessageBus
 {
-    class SomeForm //Form?
+    class SomeForm : Form
     {
         protected override void OnLoad(EventArgs e)
         {

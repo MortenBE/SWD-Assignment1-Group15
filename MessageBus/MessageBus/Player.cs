@@ -4,15 +4,12 @@ using System.Text;
 
 namespace MessageBus
 {
-    class Player
+    public class Player
     {
         void OnDoWork()
-        {
-            // ...
-
-            MessageBus.Instance.PostEvent(new OnProgressChangedEvent(progress));
-
-            // ...
+        {        
+            MessageBus.Instance.PostEvent(new OnProgressChangedEvent(2));
+                       
         }
 
 
