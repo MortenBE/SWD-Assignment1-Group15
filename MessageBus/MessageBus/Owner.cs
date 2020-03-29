@@ -25,7 +25,6 @@ namespace MessageBus
         {
             Age += e.Age;
         }
-
         #region useMessageBus
         public void PromoteRanks(int ranks)
         {

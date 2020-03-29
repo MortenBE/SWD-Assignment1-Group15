@@ -4,13 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-//Overordnede noter:
-//En subscriber er mulighvis slet ikke en subscriber men en form for user (subscriber + publisher)
-
 namespace MessageBus
-{
-    
-    class MessageBus : IMessagesbus
+{    
+    class MessageBus
     {
         public static MessageBus Instance { get { return instance ?? (instance = new MessageBus()); } }
         public void Subscribe(object subscriber, string myEvent)
@@ -23,12 +19,11 @@ namespace MessageBus
         }
         public void Broadcast(object e)
         {
-            //Eventtype må være f.eks. OnWOrkProgressChanged Event
             subscribers.Where(l => l.EventType == e.GetType()).ToList().ForEach(l => l.BroadcastEvent(e));
         }
-        //For at gøre det til en singleton: 
+        
         private static MessageBus instance;
-        private MessageBus() { } //Ved ikke om dette er nødvendigt.        
+        private MessageBus() { }       
         
         private List<EventSubscriberWrapper> subscribers = new List<EventSubscriberWrapper>(); 
 
@@ -42,14 +37,11 @@ namespace MessageBus
             {
                 Subscriber = subscriber;                
                 Type type = subscriber.GetType(); 
-                method = type.GetMethod(myEvent); // "OnEvent"
+                method = type.GetMethod(myEvent);
 
                 ParameterInfo[] parameters = method.GetParameters();
-                EventType = parameters[0].ParameterType;
-
-                
+                EventType = parameters[0].ParameterType;                
             }
-
             public void BroadcastEvent(object e) 
             {
                 method.Invoke(Subscriber, new[] { e });
