@@ -24,7 +24,7 @@ namespace MessageBus
         public void Broadcast(object e)
         {
             //Eventtype må være f.eks. OnWOrkProgressChanged Event
-            subscribers.Where(l => l.EventType == e.GetType()).ToList().ForEach(l => l.PostEvent(e));
+            subscribers.Where(l => l.EventType == e.GetType()).ToList().ForEach(l => l.BroadcastEvent(e));
         }
         //For at gøre det til en singleton: 
         private static MessageBus instance;
@@ -44,16 +44,13 @@ namespace MessageBus
                 Type type = subscriber.GetType(); 
                 method = type.GetMethod(myEvent); // "OnEvent"
 
-                //EventType = e.GetType();
-
-
                 ParameterInfo[] parameters = method.GetParameters();
                 EventType = parameters[0].ParameterType;
 
-                //Console.WriteLine(EventType);
+                
             }
 
-            public void PostEvent(object e) 
+            public void BroadcastEvent(object e) 
             {
                 method.Invoke(Subscriber, new[] { e });
             }

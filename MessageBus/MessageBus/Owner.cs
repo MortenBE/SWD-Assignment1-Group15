@@ -21,7 +21,7 @@ namespace MessageBus
             return "Name: " + Name + ", Age: " + Age + ", Money: " + Money;
         }
 
-        public void OnEvent(OnAgeChangedEvent e)
+        public void OnEventAge(OnAgeChangedEvent e)
         {
             Age += e.Age;
         }

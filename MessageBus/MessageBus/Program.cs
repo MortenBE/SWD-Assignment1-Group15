@@ -8,75 +8,58 @@ namespace MessageBus
         {
             Owner Tobi = new Owner("Tobi", 82, 10000);
             Worker John = new Worker("John", 30, 5);
-            Worker Eva = new Worker("Eva", 48, 8);
             Worker Tim = new Worker("Tim", 18, 1);
-
             IMessagesbus messagesbus = MessageBus.Instance;
-            
 
+            Console.WriteLine("Workers and Owner are created: ");
+            Console.WriteLine(Tobi.ToString());
             Console.WriteLine(John.ToString());
+            Console.WriteLine(Tim.ToString());
 
-            messagesbus.Subscribe(John, "OnEvent");
+            Console.WriteLine("");
+            Console.WriteLine("");
+
+            Console.WriteLine("------------------------------------------------------------------------------------------");
+            Console.WriteLine("All Workers and Owner are now subscribed to messagebus on Age events: ");
+            Console.WriteLine("John is now subscribed to messagebus on Rank events: ");
+            messagesbus.Subscribe(John, "OnEventRank");
             messagesbus.Subscribe(John, "OnEventAge");
+            messagesbus.Subscribe(Tobi, "OnEventAge");
+            messagesbus.Subscribe(Tim, "OnEventAge");
 
-            messagesbus.Broadcast(new OnAgeChangedEvent(100));
-            messagesbus.Broadcast(new OnRankChangedEvent(22));
+            Console.WriteLine("------------------------------------------------------------------------------------------");
+            Console.WriteLine("Messagebus broadcasts Age- and Rank event: ");
+            messagesbus.Broadcast(new OnAgeChangedEvent(2));
+            messagesbus.Broadcast(new OnRankChangedEvent(3));
 
+            Console.WriteLine(Tobi.ToString());
             Console.WriteLine(John.ToString());
+            Console.WriteLine(Tim.ToString());
 
+            Console.WriteLine("");
+            Console.WriteLine("");
 
-            //MessageBus.Instance.Subscribe(John, "OnEvent");
-            //MessageBus.Instance.Subscribe(Tobi, "OnEvent");
-            //MessageBus.Instance.Subscribe(Eva, "OnEvent");
-            //MessageBus.Instance.Subscribe(John, "OnEventAge");
+            Console.WriteLine("------------------------------------------------------------------------------------------");
+            Console.WriteLine("Owner (Tobi) Prometes ranks using the Messagebus");
+            Tobi.PromoteRanks(2);
 
-            //Console.WriteLine(Tobi.ToString());
-            //Console.WriteLine(John.ToString());
-            //Console.WriteLine(Eva.ToString());
-            //Console.WriteLine(Tim.ToString());
+            Console.WriteLine(Tobi.ToString());
+            Console.WriteLine(John.ToString());
+            Console.WriteLine(Tim.ToString());
 
-            //Console.WriteLine("");
-            //Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
 
-            //MessageBus.Instance.Broadcast(new OnRankChangedEvent(10));
-            //MessageBus.Instance.Broadcast(new OnAgeChangedEvent(10));
+            Console.WriteLine("------------------------------------------------------------------------------------------");
+            Console.WriteLine("Owner (Tobi) Dismiss(/Unsubscribes) John and hire(subscribes) Tim. Tobi prometes ranks: ");            
+            Tobi.DismissWorker(John);
+            Tobi.HireWorker(Tim, "OnEventRank");
+            Tobi.PromoteRanks(10);
 
-            //Console.WriteLine(Tobi.ToString());
-            //Console.WriteLine(John.ToString());
-            //Console.WriteLine(Eva.ToString());
-            //Console.WriteLine(Tim.ToString());
+            Console.WriteLine(Tobi.ToString());
+            Console.WriteLine(John.ToString());
+            Console.WriteLine(Tim.ToString());
 
-            //Console.WriteLine("");
-            //Console.WriteLine("");
-
-            //MessageBus.Instance.Unsubscribe(John);
-
-            //MessageBus.Instance.Broadcast(new OnRankChangedEvent(100));
-            //MessageBus.Instance.Broadcast(new OnAgeChangedEvent(100));
-
-            //Console.WriteLine(John.ToString());
-
-
-            //Tobi.PromoteRanks(10);
-
-            //Console.WriteLine(Tobi.ToString());
-            //Console.WriteLine(John.ToString());
-            //Console.WriteLine(Eva.ToString());
-            //Console.WriteLine(Tim.ToString());
-
-
-            //Tobi.DismissWorker(John);
-            //Tobi.HireWorker(Tim);
-
-            //Tobi.PromoteRanks(100);
-
-            //Console.WriteLine("");
-            //Console.WriteLine("");
-
-            //Console.WriteLine(Tobi.ToString());
-            //Console.WriteLine(John.ToString());
-            //Console.WriteLine(Eva.ToString());
-            //Console.WriteLine(Tim.ToString());
         }
     }
 }

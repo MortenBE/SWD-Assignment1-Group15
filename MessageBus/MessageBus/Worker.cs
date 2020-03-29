@@ -22,7 +22,7 @@ namespace MessageBus
             return "Name: " + Name + ", Age: " + Age + ", Rank: " + Rank;
         }
 
-        public void OnEvent(OnRankChangedEvent e)
+        public void OnEventRank(OnRankChangedEvent e)
         {
             Rank += e.Rank;
         }
