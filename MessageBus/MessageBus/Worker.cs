@@ -6,13 +6,20 @@ namespace MessageBus
 {
     public class Worker
     {
+        public string Name; 
         public int Age;
         public int Rank;
 
-        public Worker(int age, int rank)
+        public Worker(string name, int age, int rank)
         {
+            Name = name;
             Age = age;
             Rank = rank;            
+        }
+
+        public override string ToString()
+        {
+            return "Name: " + Name + ", Age: " + Age + ", Rank: " + Rank;
         }
 
         public void OnEvent(OnRankChangedEvent e)

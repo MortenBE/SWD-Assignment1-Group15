@@ -10,7 +10,7 @@ namespace MessageBus
 
         public OnAgeChangedEvent(int age)
         {
-            Age = age; //Så, når der er sket fremskridt så sættes dette ind i Progress
+            Age = age; 
         }
     }
 }

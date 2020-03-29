@@ -6,13 +6,19 @@ namespace MessageBus
 {
     public class Owner
     {
+        public string Name;
         public int Age;
         public int Money;
 
-        public Owner(int age, int money)
+        public Owner(string name, int age, int money)
         {
+            Name = name;
             Age = age;
             Money = money;
+        }
+        public override string ToString()
+        {
+            return "Name: " + Name + ", Age: " + Age + ", Money: " + Money;
         }
 
         public void OnEvent(OnAgeChangedEvent e)
@@ -20,11 +26,11 @@ namespace MessageBus
             Age += e.Age;
         }
 
+        #region useMessageBus
         public void PromoteRanks(int ranks)
         {
             MessageBus.Instance.Broadcast(new OnRankChangedEvent(ranks));
         }
-
         public void DismissWorker(Worker w)
         {
             MessageBus.Instance.Unsubscribe(w);
@@ -33,6 +39,7 @@ namespace MessageBus
         {
             MessageBus.Instance.Subscribe(w);
         }
+        #endregion
 
 
     }
