@@ -35,9 +35,9 @@ namespace MessageBus
         {
             MessageBus.Instance.Unsubscribe(w);
         }
-        public void HireWorker(Worker w)
+        public void HireWorker(Worker w, string myEvent)
         {
-            MessageBus.Instance.Subscribe(w);
+            MessageBus.Instance.Subscribe(w, myEvent);
         }
         #endregion
 

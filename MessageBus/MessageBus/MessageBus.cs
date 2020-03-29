@@ -10,12 +10,12 @@ using System.Text;
 namespace MessageBus
 {
     
-    class MessageBus
+    class MessageBus : IMessagesbus
     {
         public static MessageBus Instance { get { return instance ?? (instance = new MessageBus()); } }
-        public void Subscribe(object subscriber)
+        public void Subscribe(object subscriber, string myEvent)
         {
-            subscribers.Add(new EventSubscriberWrapper(subscriber));
+            subscribers.Add(new EventSubscriberWrapper(subscriber, myEvent));
         }
         public void Unsubscribe(object subscriber)
         {
@@ -38,13 +38,19 @@ namespace MessageBus
             public Type EventType { get; private set; } 
             private MethodBase method; 
 
-            public EventSubscriberWrapper(object subscriber)
+            public EventSubscriberWrapper(object subscriber, string myEvent)
             {
                 Subscriber = subscriber;                
                 Type type = subscriber.GetType(); 
-                method = type.GetMethod("OnEvent"); 
+                method = type.GetMethod(myEvent); // "OnEvent"
+
+                //EventType = e.GetType();
+
+
                 ParameterInfo[] parameters = method.GetParameters();
-                EventType = parameters[0].ParameterType;               
+                EventType = parameters[0].ParameterType;
+
+                //Console.WriteLine(EventType);
             }
 
             public void PostEvent(object e) 

@@ -24,13 +24,11 @@ namespace MessageBus
 
         public void OnEvent(OnRankChangedEvent e)
         {
-
             Rank += e.Rank;
         }
-
-        //public void OnEvent(OnAgeChangedEvent e)
-        //{
-        //    Age += e.Age;
-        //}
+        public void OnEventAge(OnAgeChangedEvent e)
+        {
+            Age += e.Age;
+        }
     }
 }
