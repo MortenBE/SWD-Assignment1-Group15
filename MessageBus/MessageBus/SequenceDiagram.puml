@@ -1,0 +1,23 @@
+@startuml
+skinparam sequenceArrowThickness 1
+skinparam roundcorner 10
+skinparam maxmessagesize 250
+skinparam sequenceParticipant underline
+
+Owner -> MessageBus: Subscribe(Owner, Handler)
+Worker->MessageBus : Subscribe(Worker, Handler)
+Owner -> Owner: PromoteRanks()
+Owner -> MessageBus: Broadcast(new OnRankChangedEvent()
+MessageBus -> MessageBus: BroadcastEvent(OnRankChangedEvent)
+MessageBus -> Worker: OnEventRank(OnRankChangedEvent)
+Owner -> Owner: DismissWorker(worker)
+Owner -> MessageBus: Unsubscribe(worker)
+Owner -> Owner: HireWorker(worker):
+Owner -> MessageBus: Subscribe(Worker, Handler)
+MessageBus -> MessageBus: Instance.Broadcast(new OnAgeChangedEvent())
+MessageBus -> MessageBus: BroadcastEvent(OnAgeChangedEvent)
+MessageBus -> Worker: OnEventAge(OnAgeChangedEvent)
+MessageBus -> Owner: OnEventAge(OnAgeChangedEvent)
+
+
+@enduml

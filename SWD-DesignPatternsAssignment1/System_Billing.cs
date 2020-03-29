@@ -4,15 +4,10 @@ using System.Text;
 
 namespace SWD_DesignPatternsAssignment1
 {
-    public class OnchangeEvent
+    public class OnchangeEvent : EventArgs
     {
 
         public int Progress { get; private set; }
-
-        public OnchangeEvent(int progress)
-        {
-            Progress = progress;
-        }
     }
     public class System_Billing
     {
