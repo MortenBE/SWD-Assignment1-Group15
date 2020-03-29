@@ -15,10 +15,10 @@ namespace MessageBus
             Rank = rank;            
         }
 
-        public void OnEvent(OnProgressChangedEvent e)
+        public void OnEvent(OnRankChangedEvent e)
         {
 
-            Rank += e.Progress;
+            Rank += e.Rank;
         }
 
         //public void OnEvent(OnAgeChangedEvent e)

@@ -23,6 +23,7 @@ namespace MessageBus
         }
         public void Broadcast(object e)
         {
+            //Eventtype må være f.eks. OnWOrkProgressChanged Event
             subscribers.Where(l => l.EventType == e.GetType()).ToList().ForEach(l => l.PostEvent(e));
         }
         //For at gøre det til en singleton: 

@@ -22,7 +22,7 @@ namespace MessageBus
 
         public void PromoteRanks(int ranks)
         {
-            MessageBus.Instance.Broadcast(new OnProgressChangedEvent(ranks));
+            MessageBus.Instance.Broadcast(new OnRankChangedEvent(ranks));
         }
 
         public void DismissWorker(Worker w)
